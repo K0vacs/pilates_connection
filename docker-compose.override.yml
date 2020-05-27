@@ -1,0 +1,15 @@
+# This Docker Compose file adds/overrides some elements of the docker-compose.yml file
+# This file is run using docker-compose up, this is to run a development version
+
+version: '3.2'
+
+services:
+  web:
+    command: bash -c "
+      python manage.py makemigrations && 
+      python manage.py migrate &&  
+      python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/src
