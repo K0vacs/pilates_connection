@@ -34,13 +34,3 @@ services:
     volumes:
       - ./wordpress/wp-content:/var/www/html/wp-content
       - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    restart: always
-    environment:
-      - CI=true
-    depends_on:
-      - db
-      - wordpress
