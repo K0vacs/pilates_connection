@@ -1,42 +1,46 @@
 # This Docker Compose file is the base file which is extended by docker-compose.prod.yml and docker-compose.override.yml
 
-version: '3.2'
+version: '3.3'
 
 services:
 
   db:
     container_name: db
     image: mysql:5.7
-    # build: ./db - To build Dockerfiles
     volumes:
       - ./db/data:/var/lib/mysql
     restart: always
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   wordpress:
     container_name: wordpress
-    image: wordpress:5.4.1-php7.4
     depends_on:
       - db
+    image: wordpress:latest
     ports:
-      - "8000:80"
+      - "8000:8000"
       - "587:587"
-    # expose
-    # - 8000
-    # - "587"
-    # When nginx is setup expose 8000 and remove port 8000:80
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
     working_dir: /var/www/html
     volumes:
       - ./wordpress/wp-content:/var/www/html/wp-content
       - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-volumes:
-  db_data:
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    restart: always
+    environment:
+      - CI=true
+    depends_on:
+      - db
+      - wordpress

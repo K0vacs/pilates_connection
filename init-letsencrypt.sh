@@ -5,9 +5,9 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(calendarize.co.za www.calendarize.co.za)
+domains=(dev.pilatesconnection.co.za www.dev.pilatesconnection.co.za)
 rsa_key_size=4096
-data_path="./data/certbot"
+data_path="./nginx/certbot"
 email="mr.f.kovacs@gmail.com" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
