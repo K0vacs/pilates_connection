@@ -19,3 +19,7 @@ services:
       - db
       - wordpress
     command: npm start
+
+  nginx:
+    volumes:
+      - ./nginx/config/dev:/etc/nginx/conf.d

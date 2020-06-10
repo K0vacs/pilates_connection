@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(dev.pilatesconnection.co.za www.dev.pilatesconnection.co.za)
+domains=(admin.pilatesconnection.co.za www.admin.pilatesconnection.co.za)
 rsa_key_size=4096
 data_path="./nginx/certbot"
 email="mr.f.kovacs@gmail.com" # Adding a valid address is strongly recommended

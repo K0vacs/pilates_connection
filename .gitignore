@@ -1,3 +1,8 @@
 .env
 /db/data/*
 /nginx/certbot/*
+/wordpress/plugins
+/wordpress/themes/index.php
+/wordpress/themes/twentynineteen
+/wordpress/themes/twentyseventeen
+/wordpress/themes/twentytwenty
